@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <style>
+/* Contenedor del menú */
+.menu {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón principal */
+.menu-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Lista desplegable */
+.menu-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  padding: 0;
+  margin: 0;
+}
+
+/* Quitar estilos por defecto del ul */
+.menu-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  -
+}
+
+/* Estilo de los enlaces */
+.menu-content li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: black;
+}
+
+.menu-content li a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Mostrar el menú al pasar el mouse */
+.menu:hover .menu-content {
+  display: block;
+}
+.cuadro {
+background-color: white;
+
+  padding: 15px;
+  border: 2px solid black;
+  margin-top: 10vw;
+  font-family: Arial, sans-serif;
+  
+  margin-left: 20vw;
+  margin-right: 20vw;
+    border-radius: 5px;
+     box-shadow: 0 5px 30px rgb(0, 0, 0);
+    padding: 20px;
+  
+  
+
+}
+body {
+      background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    background-image: url("{{ asset('img/portada_v3.png') }}");
+    background-size: cover;
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* No repite la imagen */
+    background-attachment: fixed; /* Fija la imagen al hacer scroll */
+    
+}
+.logo-superior {
+  position: fixed;   /* Fijo en la pantalla */
+  top: 20px;         /* Arriba */
+  right: 20px;       /* Derecha */
+  height: 60px;      /* Tamaño del logo */
+  width: auto;
+  z-index: 1000;     /* Encima de todo */
+}
+footer {
+  margin-top: 80px;
+  background-color: #000;
+  padding: 30px 0;
+  text-align: center;
+}
+
+footer img {
+  max-width: 100%;
+  height: auto;
+}
+</style>
+</head>
+<body>
+<div class="menu">
+  <button class="menu-btn">Menú</button>
+
+  <div class="menu-content">
+    <ul>
+      <li><a href="/Inicio">Inicio</a></li>
+      <li><a href="/Galeria">Galeria</a></li>
+      <li><a href="/Mis metas">Mis metas</a></li>
+      <li><a href="/Mis pasatiempos">Mis pasatiempos</a></li>
+      <li><a href="/Quien soy">Quién soy</a></li>
+    </ul>
+  </div>
+</div>
+<div class="cuadro"> 
+    <h1 style="text-align: center;">Mis metas</h1>
+    <p>Mis metas a corto plazo incluyen completar mis estudios universitarios con éxito, adquirir experiencia práctica a través de pasantías y desarrollar habilidades técnicas específicas relacionadas con mi campo. A largo plazo, aspiro a establecerme en una carrera profesional que me apasione, contribuir significativamente a mi industria y continuar aprendiendo y creciendo tanto personal como profesionalmente.</p>
+</div>
+<footer>
+  <img src="{{ asset('img/pie_pagina.png') }}" alt="Pie de página institucional">
+</footer>
+</body>
+</html>
