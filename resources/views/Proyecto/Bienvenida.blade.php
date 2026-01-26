@@ -47,7 +47,7 @@
 
         <!-- OTRA BIENVENIDA -->
         <li>
-          <a href="{{ url('/1') }}" class="block py-2 hover:text-primary-500">
+          <a href="{{ url('/Usuarios') }}" class="block py-2 hover:text-primary-500">
             Registrar Usuario
           </a>
         </li>
