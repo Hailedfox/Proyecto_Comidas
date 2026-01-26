@@ -36,7 +36,7 @@
     </div>
   </div>
 </nav>
-
+hola
 {{-- CONTENIDO --}}
 @yield('contenido')
 
