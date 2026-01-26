@@ -14,7 +14,9 @@
 
 <nav class="fixed top-0 z-50 w-full bg-gray-900 border-b border-gray-700">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="#" class="flex items-center space-x-3">
+
+    <!-- LOGO -->
+    <a href="{{ url('/') }}" class="flex items-center space-x-3">
         <img src="https://flowbite.com/docs/images/logo.svg" class="h-7">
         <span class="text-xl font-semibold text-white">Rappy</span>
     </a>
@@ -28,14 +30,40 @@
 
     <div class="hidden w-full md:block md:w-auto" id="navbar-sticky">
       <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 text-white">
-        <li><a href="#" class="block py-2 hover:text-primary-500">comercios</a></li>
-        <li><a href="#" class="block py-2 hover:text-primary-500">About</a></li>
-        <li><a href="#" class="block py-2 hover:text-primary-500">Services</a></li>
-        <li><a href="#" class="block py-2 hover:text-primary-500">Contact</a></li>
+
+        <!-- BIENVENIDA -->
+        <li>
+          <a href="{{ url('/1') }}" class="block py-2 hover:text-primary-500">
+            Bienvenida
+          </a>
+        </li>
+
+        <!-- REGISTRAR COMERCIOS -->
+        <li>
+          <a href="{{ url('/comercios') }}" class="block py-2 hover:text-primary-500">
+            Registrar comercios
+          </a>
+        </li>
+
+        <!-- OTRA BIENVENIDA -->
+        <li>
+          <a href="{{ url('/1') }}" class="block py-2 hover:text-primary-500">
+            Registrar Usuario
+          </a>
+        </li>
+
+        <!-- PRODUCTOS -->
+        <li>
+          <a href="{{ url('/Producto') }}" class="block py-2 hover:text-primary-500">
+            Registrar Producto
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>
 </nav>
+
 
 {{-- CONTENIDO --}}
 @yield('contenido')
