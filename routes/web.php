@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+// Importar el controlador de administradores
+use App\Http\Controllers\AdministradorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +26,13 @@ Route::view('/Mis pasatiempos', '/Mis pasatiempos/pasatiempo');
 Route::view('/Quien soy', '/Quien soy/quien-soy');
 Route::view('/Prueba', '/Prueba/prueba');
 Route::view('/admins/crear', '/administradores/formulario-crear');
+//Proyecto
 Route::view('/', '/Proyecto/Bienvenida');
 Route::view('/comercios', '/Proyecto/Comercios/Formulario1');
 Route::view('/1', '/Proyecto/Bienvenida2');
 Route::view('/Producto', '/Proyecto/Productos/Formulario3');
-Route::view('/Usuarios', '/Proyecto/Usuarios/Formulario2')
+Route::view('/Usuarios', '/Proyecto/Usuarios/Formulario2');
 
- 
-;
+ //ruta para administradores
+Route::get('/admin/index', [AdministradorController::class,'index']); 
+
