@@ -10,6 +10,15 @@ class UsuarioController extends Controller
 {
     public function guardar(Request $request)
     {
-        dd('ENTRO AL CONTROLADOR');
+        Usuario::create([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'password_hash' => Hash::make($request->password_hash),
+            'telefono' => $request->telefono,
+            'rol' => $request->rol,
+            'activo' => $request->activo ?? 0
+        ]);
+
+        return redirect('/Usuarios')->with('success','Usuario guardado');
     }
 }
