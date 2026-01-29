@@ -1,8 +1,10 @@
 @extends('/Proyecto/Bienvenida')
 
-@section('titulo-pagina', 'Registrar producto')
+@section('titulo-pagina', '- Registrar producto')
 
 @section('contenido')
+
+
 
 <section class="bg-gray-50 dark:bg-gray-900 pt-28">
 
@@ -43,7 +45,7 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del producto *</label>
                         <input name="nombre" required
                             class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5 dark:bg-gray-700 dark:text-white">
-                    </div>
+                        </div>
 
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
