@@ -37,6 +37,9 @@ Route::view('/Producto', 'Proyecto.Productos.Formulario3');
 Route::view('/comercios', 'Proyecto.Comercios.Formulario1');
 Route::view('/1', 'Proyecto.Bienvenida2');
 Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
+Route::view('/Sesion', 'Proyecto.Insesion.sesion');
+
+
 
 
  //ruta para administradores
@@ -44,6 +47,7 @@ Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 //Proyecto
 Route::post('/guardar_usuario', [UsuarioController::class,'guardar']);
 Route::post('/guardar_producto', [ProductoController::class,'guardar']);
+
 
 
 

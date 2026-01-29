@@ -23,6 +23,6 @@ class ProductoController extends Controller
             'activo' => $request->activo ?? 0
         ]);
 
-        return redirect('/Producto')->with('success','Producto guardado');
+        return redirect('/Producto')->with('success','Producto guardado');  
     }
 }
