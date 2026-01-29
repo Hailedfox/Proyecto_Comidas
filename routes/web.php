@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 //Proyecto
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ComercioController;
 
 
 /*
@@ -45,5 +46,7 @@ Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 Route::post('/guardar_usuario', [UsuarioController::class,'guardar']);
 Route::post('/guardar_producto', [ProductoController::class,'guardar']);
 
+Route::get('/comercios', [ComercioController::class, 'create'])->name('comercios.create');
+Route::post('/comercios', [ComercioController::class, 'store'])->name('comercios.store');
 
 
