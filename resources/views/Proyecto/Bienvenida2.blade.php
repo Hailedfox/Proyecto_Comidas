@@ -41,7 +41,7 @@
             facilitar tu día a día.
         </p>
 
-        <a href="{{ url('/Usuarios') }}" class="inline-block px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-full shadow-lg transition transform hover:-translate-y-1">
+        <a href="{{ url('/Sesion') }}" class="inline-block px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-full shadow-lg transition transform hover:-translate-y-1">
             Comenzar
         </a>
 
