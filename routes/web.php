@@ -9,20 +9,6 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ComercioController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Route::view('/Galeria', '/Galeria/galeria');
@@ -32,25 +18,31 @@ Route::view('/Mis pasatiempos', '/Mis pasatiempos/pasatiempo');
 Route::view('/Quien soy', '/Quien soy/quien-soy');
 Route::view('/Prueba', '/Prueba/prueba');
 Route::view('/admins/crear', '/administradores/formulario-crear');
-//Proyecto
-Route::view('/', '/Proyecto/Bienvenida2');
-Route::view('/Producto', 'Proyecto.Productos.Formulario3');
-Route::view('/comercios', 'Proyecto.Comercios.Formulario1');
+Route::view('/', 'Proyecto.Bienvenida2');
 Route::view('/1', 'Proyecto.Bienvenida');
 Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 
 
+Route::view('/', 'Proyecto.Bienvenida2');
+Route::view('/1', 'Proyecto.Bienvenida'); 
+Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
+Route::view('/Sesion', 'Proyecto.Insesion.sesion');
+
+// RUTAS DE PRODUCTOS
+
+Route::get('/producto', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/crear', [ProductoController::class, 'create'])->name('productos.create');
+Route::post('/guardar_producto', [ProductoController::class, 'guardar'])->name('productos.store');
 
 
- //ruta para administradores
+// RUTAS DE USUARIOS
 
-//Proyecto
-Route::post('/guardar_usuario', [UsuarioController::class,'guardar']);
-Route::post('/guardar_producto', [ProductoController::class,'guardar']);
+Route::post('/guardar_usuario', [UsuarioController::class, 'guardar']);
+
+
+// RUTAS DE COMERCIOS
 
 Route::get('/comercios', [ComercioController::class, 'create'])->name('comercios.create');
 Route::post('/comercios', [ComercioController::class, 'store'])->name('comercios.store');
-
-
 

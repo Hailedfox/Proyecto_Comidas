@@ -7,7 +7,7 @@
     <title>Celeris @yield('titulo-pagina')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" />
     <link rel="icon" type="image/x-icon" href="{{ asset('img/CelerisLogo.png') }}">
-    {{-- VITE --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -31,17 +31,21 @@
 
             <div class="hidden w-full md:block md:w-auto" id="navbar-sticky">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 text-white">
-                    <li><a href="{{ url('/1') }}" class="block py-2 hover:text-blue-500">Bienvenida</a></li>
-                    <li><a href="{{ url('/comercios') }}" class="block py-2 hover:text-blue-500">Registrar comercios</a></li>
+                    <li><a href="{{ url('/') }}" class="block py-2 hover:text-blue-500">Inicio</a></li>
+                    
+                    <li><a href="{{ route('comercios.create') }}" class="block py-2 hover:text-blue-500">Registrar comercios</a></li>
+                    
                     <li><a href="{{ url('/Usuarios') }}" class="block py-2 hover:text-blue-500">Registrar Usuario</a></li>
-                    <li><a href="{{ url('/Producto') }}" class="block py-2 hover:text-blue-500">Registrar Producto</a></li>
+                    
+                    <li><a href="{{ route('productos.create') }}" class="block py-2 hover:text-blue-500">Registrar Producto</a></li>
+                    
+                    <li><a href="{{ route('productos.index') }}" class="block py-2 hover:text-green-400">Ver Inventario</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 
-{{-- CONTENIDO --}}
 @yield('contenido')
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
