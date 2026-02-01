@@ -6,7 +6,7 @@
 
     <title>Celeris @yield('titulo-pagina')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" />
-    
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/CelerisLogo.png') }}">
     {{-- VITE --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -17,7 +17,7 @@
     <nav class="fixed top-0 z-50 w-full bg-gray-900 border-b border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-            <a href="{{ url('/1') }}" class="flex items-center space-x-3">
+            <a href="{{ url('/') }}" class="flex items-center space-x-3">
                 <img src="{{ asset('img/CelerisLogo.png') }}" class="h-7" alt="Celeris Logo">
                 <span class="text-xl font-semibold text-white">Celeris</span>
             </a>

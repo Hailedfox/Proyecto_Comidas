@@ -7,8 +7,8 @@
 <style>
     /* Estilo para la animación del fondo */
     .fondo-ondas-animado {
-        background: linear-gradient(-45deg, #0f172a, #312e81, #ce6591, #4c1d95);
-        background-size: 400% 400%;
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #b0caca);
+        background-size: 600% 600%;
         animation: gradientMovement 10s ease infinite;
     }
 
@@ -32,7 +32,7 @@
         </h1>
 
         <p class="text-gray-200 text-lg md:text-xl mb-6 leading-relaxed">
-            <span class="font-semibold text-white">Celeris</span> es una plataforma diseñada para ayudarte a gestionar tus comercios de forma rápida, clara y segura.
+            <span class="font-semibold text-white">Celeris</span> es una plataforma diseñada para ayudarte a gestionar tus comercios de forma rápida, clara y segura. <br>
             Registra tu negocio, administra tu información y mantén todo organizado desde un solo lugar.
         </p>
 

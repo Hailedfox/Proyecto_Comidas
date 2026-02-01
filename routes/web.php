@@ -33,10 +33,10 @@ Route::view('/Quien soy', '/Quien soy/quien-soy');
 Route::view('/Prueba', '/Prueba/prueba');
 Route::view('/admins/crear', '/administradores/formulario-crear');
 //Proyecto
-Route::view('/', '/Proyecto/Bienvenida');
+Route::view('/', '/Proyecto/Bienvenida2');
 Route::view('/Producto', 'Proyecto.Productos.Formulario3');
 Route::view('/comercios', 'Proyecto.Comercios.Formulario1');
-Route::view('/1', 'Proyecto.Bienvenida2');
+Route::view('/1', 'Proyecto.Bienvenida');
 Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 
