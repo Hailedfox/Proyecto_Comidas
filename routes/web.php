@@ -31,8 +31,8 @@ Route::view('/1', 'Proyecto.Bienvenida');
 Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 Route::view('/Principal1', 'Proyecto.Principal.principal1');
-
-
+Route::view('/Perfil', 'Proyecto.Usuarios.Perfil');
+Route::view('/Nav2', 'Proyecto.Nav2.Nav');
 // RUTAS DE PRODUCTOS
 
 Route::get('/producto', [ProductoController::class, 'index'])->name('productos.index');

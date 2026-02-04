@@ -31,9 +31,9 @@
 
             <div class="hidden w-full md:block md:w-auto" id="navbar-sticky">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 text-white">
-                    <li><a href="{{ url('/') }}" class="block py-2 hover:text-blue-500">Inicio</a></li>
+                    <li><a href="{{ url('/Principal1') }}" class="block py-2 hover:text-blue-500">Inicio</a></li>
                     
-                    <li><a href="{{ route('comercios.create') }}" class="block py-2 hover:text-blue-500">Registrar comercios</a></li>
+                    <li><a href="{{ route('Perfil') }}" class="block py-2 hover:text-blue-500">Perfil</a></li>
                     
                     <li><a href="{{ url('/Usuarios') }}" class="block py-2 hover:text-blue-500">Registrar Usuario</a></li>
                     
