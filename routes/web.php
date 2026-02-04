@@ -32,6 +32,7 @@ Route::view('/Usuarios', 'Proyecto.Usuarios.Formulario2');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 Route::view('/Principal1', 'Proyecto.Principal.principal1');
 
+
 // RUTAS DE PRODUCTOS
 
 Route::get('/producto', [ProductoController::class, 'index'])->name('productos.index');
