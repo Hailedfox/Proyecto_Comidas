@@ -1,4 +1,4 @@
-@extends('/Proyecto/Nav2/Nav')
+@extends('/Proyecto/Nav2/nav')
 
 @section('titulo-pagina2', '- Principal1')
 
