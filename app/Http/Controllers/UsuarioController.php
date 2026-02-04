@@ -10,15 +10,26 @@ class UsuarioController extends Controller
 {
     public function guardar(Request $request)
     {
+         $request->validate([
+        'nombre' => 'required',
+        'email' => 'required|email|unique:usuarios,email',
+        'password' => 'required|min:3',
+        'telefono' => 'nullable|unique:usuarios,telefono',
+        'rol' => 'required'
+    ],[
+        'email.unique' => 'Este correo ya está registrado',
+        'telefono.unique' => 'Este teléfono ya está registrado'
+    ]);
+
         Usuario::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
-            'password_hash' => Hash::make($request->password_hash),
+            'password' => Hash::make($request->password),
             'telefono' => $request->telefono,
             'rol' => $request->rol,
             'activo' => $request->activo ?? 0
         ]);
 
-        return redirect('/Usuarios')->with('success','Usuario guardado');
+        return redirect('/Sesion')->with('success','Usuario guardado');
     }
 }

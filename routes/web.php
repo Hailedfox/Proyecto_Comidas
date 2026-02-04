@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ComercioController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
+
 
 
 
@@ -49,4 +52,13 @@ Route::post('/guardar_usuario', [UsuarioController::class, 'guardar']);
 
 Route::get('/comercios', [ComercioController::class, 'create'])->name('comercios.create');
 Route::post('/comercios', [ComercioController::class, 'store'])->name('comercios.store');
+
+//Rutas de Registro y Login
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/Principal1', function () {
+    return view('Proyecto.Principal.principal1');
+})->middleware('auth');
+
 

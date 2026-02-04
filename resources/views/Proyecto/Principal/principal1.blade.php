@@ -1,9 +1,8 @@
-@extends('/Proyecto/Bienvenida')
+@extends('/Proyecto/Nav2/Nav')
 
 @section('titulo-pagina2', '- Principal1')
 
-@section('contenido')
-
+@section('contenido')  
 <section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" >
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->
