@@ -8,6 +8,31 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
+    public function index()
+{
+    $usuarios = Usuario::all();
+    return view('Proyecto.Usuarios.index3', compact('usuarios'));
+}
+
+public function edit($id)
+{
+    $usuario = Usuario::findOrFail($id);
+
+    return view('Proyecto.Usuarios.Formulario2', compact('usuario'));
+}
+
+public function update(Request $request, $id)
+{
+    $usuario = Usuario::findOrFail($id);
+    $usuario->update($request->all());
+    return redirect()->route('usuarios.index');
+}
+
+public function destroy($id)
+{
+    Usuario::destroy($id);
+    return redirect()->route('usuarios.index');
+}
     public function guardar(Request $request)
     {
          $request->validate([
