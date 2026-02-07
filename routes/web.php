@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthController;
 
 
 
+
 Route::view('/Galeria', '/Galeria/galeria');
 Route::view('/Inicio', '/Inicio/inicio');
 Route::view('/Mis metas', '/Mis metas/metas');
@@ -41,6 +42,7 @@ Route::view('/Nav2', 'Proyecto.Nav2.Nav');
 Route::get('/producto', [ProductoController::class, 'index'])->name('productos.index');
 Route::get('/productos/crear', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/guardar_producto', [ProductoController::class, 'guardar'])->name('productos.store');
+Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
 
 
 // RUTAS DE USUARIOS

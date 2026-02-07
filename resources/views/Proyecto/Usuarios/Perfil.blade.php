@@ -4,5 +4,5 @@
 
 @section('contenido')
 
-<H1>golllll</H1>
+
 @endsection 
