@@ -1,16 +1,30 @@
-@extends('Proyecto.Bienvenida')
+@extends('Proyecto.Nav2.Nav')
 
 @section('titulo-pagina', '- Inventario')
 
 @section('contenido')
 
-    <div class="bg-gray-100 font-sans leading-normal tracking-normal min-h-screen pt-24">
+<style>
+    .fondo-ondas-animado {
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
+        background-size: 600% 600%;
+        animation: gradientMovement 10s ease infinite;
+    }
+
+    @keyframes gradientMovement {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+    <div class="bg-gray-100 font-sans leading-normal tracking-normal min-h-screen pt-24 fondo-ondas-animado">
 
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
                 
                 <div class="flex justify-between items-center mb-6"> 
-                    <h2 class="text-2xl font-semibold leading-tight text-gray-800">Inventario de Productos</h2>
+                    <h2 class="text-2xl font-semibold leading-tight text-white">Inventario de Productos</h2>
                     
                     <a href="{{ route('productos.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition duration-150 ease-in-out">
                         <i class="fas fa-plus mr-2"></i> Nuevo Producto

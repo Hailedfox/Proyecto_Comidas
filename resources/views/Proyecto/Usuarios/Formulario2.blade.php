@@ -1,11 +1,25 @@
-@extends('/Proyecto/Bienvenida')
+@extends('/Proyecto/Nav2/nav')
 
 @section('titulo-pagina', '- Registrar usuario')
 
 @section('contenido')
 
-    <div class="min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-blend-overlay bg-cover bg-center bg-no-repeat"
-        style="background-image: url('{{ asset('img/alimentosFondo.jpg') }}');">
+<style>
+    .fondo-ondas-animado {
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
+        background-size: 600% 600%;
+        animation: gradientMovement 10s ease infinite;
+    }
+
+    @keyframes gradientMovement {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+    <div class="min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-blend-overlay bg-cover bg-center bg-no-repeat fondo-ondas-animado" >
+        
 
         <div class="w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700 p-8">
 

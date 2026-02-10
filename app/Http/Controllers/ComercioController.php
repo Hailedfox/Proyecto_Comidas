@@ -3,62 +3,84 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Comercio;
+use App\Models\Comercio; // Asegúrate de que este modelo exista
 
 class ComercioController extends Controller
 {
+    // --- 1. VER LISTA (Index) ---
     public function index()
     {
         $comercios = Comercio::all();
-        return view('Proyecto.Comercios.index2', compact('comercios'));
+        // Asegúrate de crear la carpeta 'Comercios' dentro de views/Proyecto
+        return view('Proyecto.Comercios.index', compact('comercios'));
     }
 
+    // --- 2. MOSTRAR FORMULARIO DE CREAR ---
     public function create()
     {
-        return view('Proyecto.Comercios.formulario1');
+        // Este es tu "Formulario1.blade.php"
+        return view('Proyecto.Comercios.Formulario1');
     }
 
+    // --- 3. GUARDAR NUEVO (Store) ---
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required',
-            'id_usuario' => 'required|integer',
-            'descripcion' => 'nullable',
-            'direccion' => 'nullable',
-            'ciudad' => 'nullable',
-            'horario_apertura' => 'nullable',
-            'horario_cierre' => 'nullable',
+        $request->validate([
+            'nombre' => 'required|max:255',
+            'id_usuario' => 'required', // Importante: Debes enviar un ID de usuario válido
         ]);
 
-        $validated['activo'] = $request->has('activo') ? 1 : 0;
+        Comercio::create([
+            'id_usuario' => $request->id_usuario,
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'direccion' => $request->direccion,
+            'ciudad' => $request->ciudad,
+            'horario_apertura' => $request->horario_apertura,
+            'horario_cierre' => $request->horario_cierre,
+            // Si el checkbox no se marca, guardamos 0
+            'activo' => $request->has('activo') ? 1 : 0
+        ]);
 
-        Comercio::create($validated);
-
-        return redirect()->route('comercios.index')
-            ->with('success','Comercio registrado correctamente');
+        return redirect()->route('comercios.index')->with('success', 'Comercio creado con éxito');
     }
 
+    // --- 4. MOSTRAR FORMULARIO DE EDITAR ---
     public function edit($id)
     {
         $comercio = Comercio::findOrFail($id);
-        return view('Proyecto.Comercios.formulario1', compact('comercio'));
+        // Usaremos una vista separada para editar para evitar confusiones
+        return view('Proyecto.Comercios.edit', compact('comercio'));
     }
 
+    // --- 5. ACTUALIZAR (Update) ---
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nombre' => 'required|max:255',
+        ]);
+
         $comercio = Comercio::findOrFail($id);
 
-        $data = $request->all();
-        $data['activo'] = $request->has('activo') ? 1 : 0;
+        $comercio->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'direccion' => $request->direccion,
+            'ciudad' => $request->ciudad,
+            'horario_apertura' => $request->horario_apertura,
+            'horario_cierre' => $request->horario_cierre,
+            'activo' => $request->has('activo') ? 1 : 0
+        ]);
 
-        $comercio->update($data);
-
-        return redirect()->route('comercios.index');
+        return redirect()->route('comercios.index')->with('success', 'Comercio actualizado');
     }
 
+    // --- 6. ELIMINAR (Destroy) ---
     public function destroy($id)
     {
-        Comercio::destroy($id);
-        return redirect()->route('comercios.index');
+        $comercio = Comercio::findOrFail($id);
+        $comercio->delete();
+
+        return redirect()->route('comercios.index')->with('success', 'Comercio eliminado');
     }
 }

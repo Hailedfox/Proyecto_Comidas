@@ -35,7 +35,7 @@
                     
                     <li><a href="{{ route('comercios.create') }}" class="block py-2 hover:text-blue-500">Registrar comercios</a></li>
                     
-                    <li><a href="{{ url('/Usuarios') }}" class="block py-2 hover:text-blue-500">Registrar Usuario</a></li>
+                    <li><a href="{{ url('/usuarios') }}" class="block py-2 hover:text-blue-500">Registrar Usuario</a></li>
                     
                     <li><a href="{{ route('productos.create') }}" class="block py-2 hover:text-blue-500">Registrar Producto</a></li>
                     

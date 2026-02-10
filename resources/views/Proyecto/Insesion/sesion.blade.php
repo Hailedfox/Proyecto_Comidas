@@ -3,6 +3,21 @@
 @section('titulo-pagina', '- Iniciar sesión')
 
 @section('contenido')
+
+<style>
+    .fondo-ondas-animado {
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
+        background-size: 600% 600%;
+        animation: gradientMovement 10s ease infinite;
+    }
+
+    @keyframes gradientMovement {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
 <div class="min-h-screen flex flex-col items-center justify-center pt-20 px-4 bg-gray-800 bg-blend-overlay bg-cover bg-center bg-no-repeat relative"
      style="background-image: url('{{ asset('img/alimentosFondo.jpg') }}');">
 

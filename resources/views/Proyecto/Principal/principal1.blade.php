@@ -3,7 +3,22 @@
 @section('titulo-pagina2', '- Principal1')
 
 @section('contenido')  
-<section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12" >
+
+<style>
+    .fondo-ondas-animado {
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
+        background-size: 600% 600%;
+        animation: gradientMovement 10s ease infinite;
+    }
+
+    @keyframes gradientMovement {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+<section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12 fondo-ondas-animado" >
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->
     <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">

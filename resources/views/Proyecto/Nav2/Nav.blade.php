@@ -47,11 +47,10 @@
     <!-- Links -->
     <div class="flex items-center space-x-6 text-white">
 
-      <a href="#" class="hover:text-blue-500">Home</a>
-      <a href="#" class="hover:text-blue-500">About</a>
-      <a href="#" class="hover:text-blue-500">Services</a>
-      <a href="#" class="hover:text-blue-500">Pricing</a>
-      <a href="#" class="hover:text-blue-500">Contact</a>
+      <a href="#" class="hover:text-blue-500">Inicio</a>
+      <a href="#" class="hover:text-blue-500">Sobre Nosotros</a>
+      <a href="#" class="hover:text-blue-500">Servicios</a>
+      <a href="#" class="hover:text-blue-500">Contacto</a>
 
     </div>
 

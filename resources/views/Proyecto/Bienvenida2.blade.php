@@ -5,7 +5,6 @@
 @section('contenido')
 
 <style>
-    /* Estilo para la animación del fondo */
     .fondo-ondas-animado {
         background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #b0caca);
         background-size: 600% 600%;

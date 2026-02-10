@@ -4,15 +4,36 @@
 
 @section('contenido')
 
-    <div class="min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-blend-overlay bg-cover bg-center bg-no-repeat"
-        style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop');">
-        <div
-            class="w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700 p-8 my-8">
+<style>
+    .fondo-ondas-animado {
+        /* Tu degradado original */
+        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
+        background-size: 400% 400%; /* Ajustado para mejor rendimiento */
+        animation: gradientMovement 10s ease infinite;
+        
+        /* Esto permite que el color se mezcle con la imagen de fondo de atrás */
+        mix-blend-mode: overlay; 
+        opacity: 0.8; /* Ajusta la intensidad del color */
+    }
 
-            <h1
-                class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center mb-6">
+    @keyframes gradientMovement {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+    <div class="relative min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-cover bg-center bg-no-repeat"
+         style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop');">
+        
+        <div class="absolute inset-0 fondo-ondas-animado"></div>
+
+        <div class="relative z-10 w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700 p-8 my-8">
+
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center mb-6">
                 Registrar producto
             </h1>
+            
             <form method="POST" action="/guardar_producto" class="space-y-4 md:space-y-5">
                 @csrf
 
@@ -36,8 +57,7 @@
                 </div>
 
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del producto
-                        *</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del producto *</label>
                     <input type="text" name="nombre" required
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                 </div>
@@ -50,8 +70,7 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Original
-                            *</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Original *</label>
                         <input type="number" name="precio_original" required
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                     </div>
@@ -90,9 +109,8 @@
 
                 <div class="flex items-center">
                     <input id="activo" name="activo" type="checkbox" value="1" checked
-                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600">
-                    <label for="activo" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Producto
-                        activo</label>
+                        class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600">
+                    <label for="activo" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Producto activo</label>
                 </div>
 
                 <button type="submit"
@@ -105,3 +123,4 @@
     </div>
 
 @endsection
+            
