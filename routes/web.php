@@ -36,7 +36,7 @@ Route::view('/admins/crear', '/administradores/formulario-crear');
 Route::get('/', [ApiController::class, 'index'])->name('inicio');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 Route::view('/Principal1', 'Proyecto.Principal.principal1')->middleware('auth');
-Route::view('/Perfil', 'Proyecto.Usuarios.Perfil')->name('Perfil');
+Route::view('/Perfil', 'Proyecto.Usuarios.Perfil')->name('perfil');
 Route::view('/Nav2', 'Proyecto.Nav2.Nav');
 
 /*
