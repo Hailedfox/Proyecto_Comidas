@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ComercioController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ApiController;
 
 
 
@@ -31,7 +32,8 @@ Route::view('/admins/crear', '/administradores/formulario-crear');
 |--------------------------------------------------------------------------
 */
 
-Route::view('/', 'Proyecto.Bienvenida2');
+// Route::view('/', 'Proyecto.Bienvenida2');
+Route::get('/', [ApiController::class, 'index'])->name('inicio');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 Route::view('/Principal1', 'Proyecto.Principal.principal1')->middleware('auth');
 Route::view('/Perfil', 'Proyecto.Usuarios.Perfil')->name('Perfil');
