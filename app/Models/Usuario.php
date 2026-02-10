@@ -17,7 +17,8 @@ class Usuario extends Model
         'password',
         'telefono',
         'rol',
-        'activo'
+        'activo',
+        'foto',
     ];
 
     public $timestamps = false;
