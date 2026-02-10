@@ -1,4 +1,4 @@
-@extends('/Proyecto/Nav2/nav')
+@extends('/Proyecto.Bienvenida2')
 
 @section('titulo-pagina', '- Registrar usuario')
 

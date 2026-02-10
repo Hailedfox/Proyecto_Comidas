@@ -26,6 +26,9 @@ Route::view('/admins/crear', '/administradores/formulario-crear');
 
 
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | VISTAS SIMPLES
@@ -34,6 +37,7 @@ Route::view('/admins/crear', '/administradores/formulario-crear');
 
 // Route::view('/', 'Proyecto.Bienvenida2');
 Route::get('/', [ApiController::class, 'index'])->name('inicio');
+Route::view('/1', 'Proyecto.Bienvenida2');
 Route::view('/Sesion', 'Proyecto.Insesion.sesion');
 Route::view('/Principal1', 'Proyecto.Principal.principal1')->middleware('auth');
 Route::view('/Perfil', 'Proyecto.Usuarios.Perfil')->name('perfil');

@@ -1,52 +1,45 @@
-@extends('/Proyecto/Bienvenida')
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-@section('titulo-pagina', 'Bienvenida')
+    <title>Celeris @yield('titulo-pagina')</title>
 
-@section('contenido')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/CelerisLogo.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-<style>
+<body class="bg-gray-50 dark:bg-gray-900 font-sans">
 
-    .fondo-ondas-animado {
-        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #b0caca);
-        background-size: 600% 600%;
-        animation: gradientMovement 10s ease infinite;
-    }
+<header>
+    <nav class="fixed top-0 z-50 w-full bg-gray-900 border-b border-gray-700 h-16">
+        <div class="max-w-screen-xl h-full flex items-center justify-between mx-auto px-4">
 
-    @keyframes gradientMovement {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-</style>
+            <a href="{{ url('/') }}" class="flex items-center space-x-3">
+                <img src="{{ asset('img/CelerisLogo.png') }}" class="h-8" alt="Celeris Logo">
+                <span class="text-xl font-bold text-white leading-none">Celeris</span>
+            </a>
 
-<section class="min-h-screen flex flex-col items-center justify-center pt-20 fondo-ondas-animado px-4 text-center">
+            <div class="hidden md:flex items-center space-x-8 text-sm text-white">
+                <a href="{{ url('/') }}" class="text-blue-500 font-bold">Inicio</a>
+                <a href="{{ route('comercios.index') }}">Comercios</a>
+                <a href="{{ route('usuarios.index') }}">Usuarios</a>
+                <a href="{{ route('productos.index') }}">Inventario</a>
+                <a href="{{ url('/Sesion') }}" class="hover:text-pink-500">Iniciar Sesión</a>
+            </div>
 
-    <img src="{{ asset('img/CelerisLogo.png') }}" 
-         alt="Logo Celeris" 
-         class="w-32 md:w-48 h-auto mb-6 drop-shadow-2xl">
+        </div>
+    </nav>
+</header>
 
-    <div class="max-w-3xl mx-auto">
+<main class="pt-16">
+    @yield('contenido')
+</main>
 
-        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">
-            Bienvenido a <span class="text-pink-500">Celeris</span>
-        </h1>
-
-        <p class="text-gray-200 text-lg md:text-xl mb-6 leading-relaxed">
-            <span class="font-semibold text-white">Celeris</span> es una plataforma diseñada para ayudarte a gestionar tus comercios de forma rápida, clara y segura. <br>
-            Registra tu negocio, administra tu información y mantén todo organizado desde un solo lugar.
-        </p>
-
-        <p class="text-white text-sm md:text-base max-w-2xl mx-auto mb-10">
-            Nuestro objetivo es brindarte una experiencia sencilla e intuitiva, combinando tecnología y diseño para
-            facilitar tu día a día.
-        </p>
-
-        <a href="{{ url('/Sesion') }}" class="inline-block px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-full shadow-lg transition transform hover:-translate-y-1">
-            Comenzar
-        </a>
-
-    </div>
-
-</section>
-
-@endsection
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+</body>
+</html>
