@@ -10,6 +10,7 @@ use App\Http\Controllers\ComercioController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\SocialController;
 
 
 
@@ -37,8 +38,7 @@ Route::view('/admins/crear', '/administradores/formulario-crear');
 
 // Route::view('/', 'Proyecto.Bienvenida2');
 Route::get('/', [ApiController::class, 'index'])->name('inicio');
-Route::view('/1', 'Proyecto.Bienvenida2');
-Route::view('/Sesion', 'Proyecto.Insesion.sesion');
+Route::view('/Sesion', 'Proyecto.Insesion.sesion')->name('login');
 Route::view('/Principal1', 'Proyecto.Principal.principal1')->middleware('auth');
 Route::view('/Perfil', 'Proyecto.Usuarios.Perfil')->name('perfil');
 Route::view('/Nav2', 'Proyecto.Nav2.Nav');
@@ -92,5 +92,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/Principal1', function () {
     return view('Proyecto.Principal.principal1');
 })->middleware('auth');
+
+Route::get('/login-google', [SocialController::class, 'redirect'])->name('google.login');
+Route::get('/google-callback', [SocialController::class, 'callback']);
 
 
