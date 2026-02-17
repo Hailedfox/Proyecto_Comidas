@@ -23,6 +23,7 @@ class Comercio extends Model
         'ciudad',
         'horario_apertura',
         'horario_cierre',
-        'activo'
+        'activo',
+        'foto',
     ];
 }
