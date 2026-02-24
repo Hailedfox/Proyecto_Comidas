@@ -23,36 +23,34 @@ class ComercioController extends Controller
     }
 
     // --- 3. GUARDAR NUEVO (Store) ---
-    public function store(Request $request)
-    {
-      $request->validate([
+  public function store(Request $request)
+{
+    // 1. Validar los datos
+    $request->validate([
         'nombre' => 'required|max:255',
         'id_usuario' => 'required',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB
+        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
-    // 2. Preparar los datos para guardar
-    $datos = $request->all();
 
-    // 3. Lógica para la foto
+    $rutaFoto = null;
+
+    // 2. Si el usuario subió una foto, guardarla en la carpeta
     if ($request->hasFile('foto')) {
-        // Guarda la foto en storage/app/public/fotos_comercios
+        // Esto guarda el archivo en storage/app/public/fotos_comercios
         $rutaFoto = $request->file('foto')->store('fotos_comercios', 'public');
-        
-        // Sobreescribimos el valor de 'foto' con la ruta generada
-        $datos['foto'] = $rutaFoto;
     }
 
-        // 4. Crear el comercio con todos los datos
+    // 3. Crear el registro en la base de datos
     Comercio::create([
-        'id_usuario'       => $datos['id_usuario'],
-        'nombre'           => $datos['nombre'],
-        'descripcion'      => $datos['descripcion'],
-        'direccion'        => $datos['direccion'],
-        'ciudad'           => $datos['ciudad'],
+        'id_usuario'       => $request->id_usuario,
+        'nombre'           => $request->nombre,
+        'descripcion'      => $request->descripcion,
+        'direccion'        => $request->direccion,
+        'ciudad'           => $request->ciudad,
         'horario_apertura' => $request->horario_apertura,
         'horario_cierre'   => $request->horario_cierre,
         'activo'           => $request->has('activo') ? 1 : 0,
-        'foto'             => $datos['foto'] ?? null, // Guardamos la ruta o null
+        'foto'             => $rutaFoto, // Aquí guardamos la ruta (texto)
     ]);
 
     return redirect()->route('comercios.index')->with('success', 'Comercio creado con éxito');
