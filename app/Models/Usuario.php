@@ -23,7 +23,8 @@ class Usuario extends Authenticatable
         'telefono',
         'rol',
         'activo',
-        'google_id'
+        'google_id',
+        'foto',
     ];
 
     // 🔒 MUY IMPORTANTE: Ocultar datos sensibles
