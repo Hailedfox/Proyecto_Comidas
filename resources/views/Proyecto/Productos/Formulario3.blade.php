@@ -1,126 +1,75 @@
-@extends('/Proyecto/Bienvenida')
-
-@section('titulo-pagina', '- Registrar producto')
+@extends('Proyecto.Nav2.Nav')
 
 @section('contenido')
+<div class="relative min-h-screen flex items-center justify-center pt-24 px-4 bg-gray-900 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-black opacity-60"></div>
 
-<style>
-    .fondo-ondas-animado {
-        /* Tu degradado original */
-        background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
-        background-size: 400% 400%; /* Ajustado para mejor rendimiento */
-        animation: gradientMovement 10s ease infinite;
+    <div class="relative z-10 w-full max-w-lg bg-white rounded-xl shadow-2xl p-8 my-8">
+        <h1 class="text-2xl font-bold text-center text-gray-900 mb-6">Registrar Nuevo Producto</h1>
+
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         
-        /* Esto permite que el color se mezcle con la imagen de fondo de atrás */
-        mix-blend-mode: overlay; 
-        opacity: 0.8; /* Ajusta la intensidad del color */
-    }
+        <form method="POST" action="{{ route('productos.store') }}" class="space-y-5">
+            @csrf
 
-    @keyframes gradientMovement {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-</style>
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Comercio Perteneciente *</label>
+                <select name="id_comercio" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
+                    <option value="">Seleccione un comercio...</option>
+                    {{-- CARGA DINÁMICA: Aquí aparecen los comercios que agregaste --}}
+                    @foreach($comercios as $comercio)
+                        <option value="{{ $comercio->id_comercio }}" {{ old('id_comercio') == $comercio->id_comercio ? 'selected' : '' }}>
+                            {{ $comercio->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    <div class="relative min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-cover bg-center bg-no-repeat"
-         style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop');">
-        
-        <div class="absolute inset-0 fondo-ondas-animado"></div>
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Nombre del producto *</label>
+                <input type="text" name="nombre" value="{{ old('nombre') }}" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
+            </div>
 
-        <div class="relative z-10 w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700 p-8 my-8">
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Descripción</label>
+                <textarea name="descripcion" rows="2" class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">{{ old('descripcion') }}</textarea>
+            </div>
 
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center mb-6">
-                Registrar producto
-            </h1>
-            
-            <form method="POST" action="/guardar_producto" class="space-y-4 md:space-y-5">
-                @csrf
-
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comercio *</label>
-                    <select name="id_comercio" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                        <option value="">Seleccione...</option>
-                        <option value="1">Comercio Demo</option>
-                    </select>
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Precio Original *</label>
+                    <input type="number" step="0.01" name="precio_original" value="{{ old('precio_original') }}" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
                 </div>
-
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
-                    <select name="id_categoria"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                        <option value="">Sin categoría</option>
-                        <option value="1">Alimentos</option>
-                        <option value="2">Higiene</option>
-                    </select>
+                    <label class="block mb-2 text-sm font-medium text-green-600">Precio Oferta *</label>
+                    <input type="number" step="0.01" name="precio_descuento" value="{{ old('precio_descuento') }}" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
                 </div>
+            </div>
 
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del producto *</label>
-                    <input type="text" name="nombre" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Stock *</label>
+                    <input type="number" name="cantidad_disponible" value="{{ old('cantidad_disponible') }}" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
                 </div>
-
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
-                    <textarea name="descripcion" rows="2"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
+                    <label class="block mb-2 text-sm font-medium text-red-600">Fecha de Caducidad *</label>
+                    <input type="date" name="fecha_caducidad" value="{{ old('fecha_caducidad') }}" required class="bg-gray-50 border border-gray-300 rounded-lg w-full p-2.5">
                 </div>
+            </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Original *</label>
-                        <input type="number" name="precio_original" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Oferta *</label>
-                        <input type="number" name="precio_descuento" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock *</label>
-                        <input type="number" name="cantidad_disponible" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Caducidad *</label>
-                        <input type="date" name="fecha_caducidad" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Inicio recogida</label>
-                        <input type="time" name="hora_recogida_inicio"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fin recogida</label>
-                        <input type="time" name="hora_recogida_fin"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                </div>
-
-                <div class="flex items-center">
-                    <input id="activo" name="activo" type="checkbox" value="1" checked
-                        class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600">
-                    <label for="activo" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Producto activo</label>
-                </div>
-
-                <button type="submit"
-                    class="w-full text-white bg-purple-900 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Guardar producto
-                </button>
-
-            </form>
-        </div>
+            <div class="flex gap-4 pt-4">
+                <a href="{{ route('productos.index') }}" class="w-1/2 text-center bg-gray-200 py-3 rounded-lg font-bold">Cancelar</a>
+                <button type="submit" class="w-1/2 text-white bg-blue-600 py-3 rounded-lg font-bold shadow-lg">Guardar</button>
+            </div>
+        </form>
     </div>
-
+</div>
 @endsection
-            

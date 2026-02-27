@@ -12,6 +12,7 @@ class Producto extends Model
     protected $table = 'productos';
     protected $primaryKey = 'id_producto';
     public $timestamps = false;
+
     protected $fillable = [
         'id_comercio',
         'id_categoria',
@@ -25,4 +26,16 @@ class Producto extends Model
         'hora_recogida_fin',
         'activo'
     ];
+
+    protected $casts = [
+        'precio_original' => 'decimal:2',
+        'precio_descuento' => 'decimal:2',
+        'fecha_caducidad' => 'date',
+        'activo' => 'boolean',
+    ];
+
+    public function comercio()
+    {
+        return $this->belongsTo(Comercio::class, 'id_comercio', 'id_comercio');
+    }
 }

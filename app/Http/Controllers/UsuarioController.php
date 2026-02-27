@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth; // Necesario para revisar quién está logueado
 
 class UsuarioController extends Controller
 {
@@ -25,33 +26,50 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
 
+        // Si sube una nueva foto, borramos la vieja y guardamos la nueva
         if ($request->hasFile('foto')) {
-
             if ($usuario->foto) {
                 Storage::disk('public')->delete($usuario->foto);
             }
-
             $usuario->foto = $request->file('foto')->store('usuarios', 'public');
         }
 
-        $usuario->update($request->except('foto'));
+        // Evitamos que actualice la contraseña si la dejó en blanco en editar
+        $data = $request->except(['foto', 'password']);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
 
-        return redirect()->route('usuarios.index');
+        $usuario->update($data);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado');
     }
 
+    // 🔒 PROTECCIÓN APLICADA: Solo el MASTER puede eliminar
     public function destroy($id)
     {
-        Usuario::destroy($id);
-        return redirect()->route('usuarios.index');
+        if (!Auth::user() || !Auth::user()->esMaster()) {
+            return redirect()->route('usuarios.index')->with('error', 'No tienes permisos para eliminar usuarios.');
+        }
+
+        $usuario = Usuario::findOrFail($id);
+        
+        // Borrar foto del servidor si existe
+        if ($usuario->foto) {
+            Storage::disk('public')->delete($usuario->foto);
+        }
+        
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado');
     }
 
     public function guardar(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
-            'email' => 'required|email|unique:usuarios,email',
-            'password' => 'required|min:3',
-            'telefono' => 'nullable|unique:usuarios,telefono',
+            'nombre' => 'required|string|max:255', // Cambiado a 'name' si usaste el modelo nuevo, pero lo dejamos nombre por tu form
+            'email' => 'required|email|unique:users,email', // OJO: La tabla es 'users' según tu DB
+            'password' => 'required|min:4',
+            'telefono' => 'nullable|unique:users,telefono',
             'rol' => 'required',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ],[
@@ -66,15 +84,15 @@ class UsuarioController extends Controller
         }
 
         Usuario::create([
-            'nombre' => $request->nombre,
+            'name' => $request->nombre, // Según tu DB es 'name'
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'telefono' => $request->telefono,
             'rol' => $request->rol,
-            'activo' => $request->activo ?? 0,
+            'activo' => $request->has('activo') ? 1 : 0,
             'foto' => $rutaFoto
         ]);
 
-        return redirect('/Sesion')->with('success','Usuario guardado');
+        return redirect('/Sesion')->with('success','Usuario guardado exitosamente');
     }
 }

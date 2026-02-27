@@ -1,16 +1,17 @@
-@extends('/Proyecto.Bienvenida2')
+@extends('Proyecto.Nav2.Nav')
 
-@section('titulo-pagina', '- Registrar usuario')
+@section('titulo-pagina', isset($usuario) ? '- Editar Usuario' : '- Nuevo Usuario')
 
 @section('contenido')
 
 <style>
     .fondo-ondas-animado {
         background: linear-gradient(-45deg, #152a5b, #2e89a5, #13599b, #fc6a95);
-        background-size: 600% 600%;
+        background-size: 400% 400%;
         animation: gradientMovement 10s ease infinite;
+        mix-blend-mode: overlay; 
+        opacity: 0.85; 
     }
-
     @keyframes gradientMovement {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -18,17 +19,20 @@
     }
 </style>
 
-<div class="min-h-screen flex items-center justify-center pt-20 px-4 bg-gray-800 bg-blend-overlay bg-cover bg-center bg-no-repeat fondo-ondas-animado">
+<div class="relative min-h-screen flex items-center justify-center pt-24 px-4 bg-gray-900 bg-cover bg-center bg-no-repeat"
+     style="background-image: url('{{ asset('img/alimentosFondo.jpg') }}');">
 
-    <div class="w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700 p-8">
+    <div class="absolute inset-0 fondo-ondas-animado"></div>
 
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center mb-6">
-            {{ isset($usuario) ? 'Editar usuario' : 'Registrar usuario' }}
+    <div class="relative z-10 w-full max-w-lg bg-white rounded-xl shadow-2xl p-8 my-8">
+
+        <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 text-center mb-6">
+            {{ isset($usuario) ? 'Editar Usuario' : 'Registrar Nuevo Usuario' }}
         </h1>
 
         @if ($errors->any())
-            <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
-                <ul class="list-disc pl-5">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc pl-5 text-sm">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -36,99 +40,87 @@
             </div>
         @endif
 
-        @if (session('success'))
-            <div class="bg-green-200 border border-green-500 text-green-800 px-4 py-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form method="POST"
-            enctype="multipart/form-data"
-            action="{{ isset($usuario) ? route('usuarios.update', $usuario->id_usuario) : route('usuarios.store') }}"
-            class="space-y-4 md:space-y-5">
-
+        <form method="POST" enctype="multipart/form-data" 
+              action="{{ isset($usuario) ? route('usuarios.update', $usuario->id) : route('usuarios.store') }}" 
+              class="space-y-5">
             @csrf
             @if (isset($usuario))
                 @method('PUT')
             @endif
 
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre *</label>
-                <input type="text" name="nombre" required value="{{ old('nombre', $usuario->nombre ?? '') }}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <label class="block mb-2 text-sm font-medium text-gray-900">Nombre Completo *</label>
+                <input type="text" name="nombre" required value="{{ old('nombre', $usuario->name ?? '') }}"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
             </div>
 
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo *</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Correo Electrónico *</label>
                 <input type="email" name="email" required value="{{ old('email', $usuario->email ?? '') }}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
             </div>
 
             @if (!isset($usuario))
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña *</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Contraseña *</label>
                     <input type="password" name="password" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <p class="mt-1 text-xs text-gray-500">Se guardará encriptada</p>
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+                    <p class="mt-1 text-xs text-gray-500">Se guardará de forma segura (encriptada).</p>
+                </div>
+            @else
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Nueva Contraseña (Opcional)</label>
+                    <input type="password" name="password" placeholder="Deja en blanco para no cambiarla"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
                 </div>
             @endif
 
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
-                <input type="text" name="telefono" value="{{ old('telefono', $usuario->telefono ?? '') }}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Teléfono</label>
+                    <input type="text" name="telefono" value="{{ old('telefono', $usuario->telefono ?? '') }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Rol en el sistema *</label>
+                    <select name="rol" required class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5">
+                        <option value="">Seleccione</option>
+                        <option value="base" {{ old('rol', $usuario->rol ?? '') == 'base' ? 'selected' : '' }}>Usuario Base</option>
+                        <option value="comercio" {{ old('rol', $usuario->rol ?? '') == 'comercio' ? 'selected' : '' }}>Dueño Comercio</option>
+                        <option value="master" {{ old('rol', $usuario->rol ?? '') == 'master' ? 'selected' : '' }}>Admin Master</option>
+                    </select>
+                </div>
             </div>
 
-            {{-- ✅ FOTO  --}}
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Foto de perfil
-                </label>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Foto de perfil</label>
+                @if (isset($usuario) && $usuario->foto)
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/' . $usuario->foto) }}" class="w-16 h-16 rounded-full object-cover shadow border">
+                    </div>
+                @endif
                 <input type="file" name="foto" accept="image/*"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2">
             </div>
 
-            @if (isset($usuario) && $usuario->foto)
-                <div class="flex justify-center">
-                    <img src="{{ asset('storage/' . $usuario->foto) }}"
-                        class="mt-2 w-24 h-24 rounded-full object-cover">
-                </div>
-            @endif
-
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rol *</label>
-                <select name="rol" required
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                    <option value="">Seleccione</option>
-                    <option value="cliente" {{ old('rol', $usuario->rol ?? '') == 'cliente' ? 'selected' : '' }}>Cliente</option>
-                    <option value="comercio" {{ old('rol', $usuario->rol ?? '') == 'comercio' ? 'selected' : '' }}>Comercio</option>
-                    <option value="admin" {{ old('rol', $usuario->rol ?? '') == 'admin' ? 'selected' : '' }}>Administrador</option>
-                </select>
-            </div>
-
-            <div class="flex items-center">
+            <div class="flex items-center pt-2">
                 <input id="activo" name="activo" type="checkbox" value="1"
                     {{ old('activo', $usuario->activo ?? true) ? 'checked' : '' }}
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
-                <label for="activo" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Usuario activo
-                </label>
+                    class="w-4 h-4 border border-gray-300 rounded text-blue-600 focus:ring-blue-500">
+                <label for="activo" class="ml-2 text-sm font-medium text-gray-900">Usuario activo (Permitir acceso)</label>
             </div>
 
-            <button type="submit"
-                class="w-full text-white bg-purple-900 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5">
-                {{ isset($usuario) ? 'Actualizar usuario' : 'Guardar usuario' }}
-            </button>
-
+            <div class="flex gap-4 pt-4">
+                <a href="{{ route('usuarios.index') }}"
+                    class="w-1/2 text-center text-gray-700 bg-gray-200 hover:bg-gray-300 font-bold rounded-lg text-sm px-5 py-3 transition">
+                    Cancelar
+                </a>
+                <button type="submit"
+                    class="w-1/2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-3 transition shadow-lg">
+                    <i class="fas fa-save mr-1"></i> {{ isset($usuario) ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
         </form>
-
-        <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
-            ¿Ya tienes cuenta?
-            <a href="/Sesion" class="text-purple-700 hover:underline font-medium">
-                Iniciar sesión
-            </a>
-        </p>
-
     </div>
 </div>
 

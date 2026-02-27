@@ -3,75 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Comercio; // Asegúrate de que este modelo exista
+use App\Models\Comercio; 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ComercioController extends Controller
 {
-    // --- 1. VER LISTA (Index) ---
     public function index()
     {
-        $comercios = Comercio::all();
-        // Asegúrate de crear la carpeta 'Comercios' dentro de views/Proyecto
+        // Traemos los comercios junto con el nombre de su usuario dueño
+        $comercios = Comercio::with('usuario')->get(); 
         return view('Proyecto.Comercios.index', compact('comercios'));
     }
 
-    // --- 2. MOSTRAR FORMULARIO DE CREAR ---
     public function create()
     {
-        // Este es tu "Formulario1.blade.php"
         return view('Proyecto.Comercios.Formulario1');
     }
 
-    // --- 3. GUARDAR NUEVO (Store) ---
-  public function store(Request $request)
-{
-    // 1. Validar los datos
-    $request->validate([
-        'nombre' => 'required|max:255',
-        'id_usuario' => 'required',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|max:255',
+            'id_usuario' => 'required|exists:users,id', // Verifica que el usuario exista
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $rutaFoto = null;
+        $rutaFoto = null;
 
-    // 2. Si el usuario subió una foto, guardarla en la carpeta
-    if ($request->hasFile('foto')) {
-        // Esto guarda el archivo en storage/app/public/fotos_comercios
-        $rutaFoto = $request->file('foto')->store('fotos_comercios', 'public');
+        if ($request->hasFile('foto')) {
+            $rutaFoto = $request->file('foto')->store('fotos_comercios', 'public');
+        }
+
+        Comercio::create([
+            'id_usuario'       => $request->id_usuario,
+            'nombre'           => $request->nombre,
+            'descripcion'      => $request->descripcion,
+            'direccion'        => $request->direccion,
+            'ciudad'           => $request->ciudad,
+            'horario_apertura' => $request->horario_apertura,
+            'horario_cierre'   => $request->horario_cierre,
+            'activo'           => $request->has('activo') ? 1 : 0,
+            'foto'             => $rutaFoto,
+        ]);
+
+        return redirect()->route('comercios.index')->with('success', 'Comercio creado con éxito');
     }
 
-    // 3. Crear el registro en la base de datos
-    Comercio::create([
-        'id_usuario'       => $request->id_usuario,
-        'nombre'           => $request->nombre,
-        'descripcion'      => $request->descripcion,
-        'direccion'        => $request->direccion,
-        'ciudad'           => $request->ciudad,
-        'horario_apertura' => $request->horario_apertura,
-        'horario_cierre'   => $request->horario_cierre,
-        'activo'           => $request->has('activo') ? 1 : 0,
-        'foto'             => $rutaFoto, // Aquí guardamos la ruta (texto)
-    ]);
-
-    return redirect()->route('comercios.index')->with('success', 'Comercio creado con éxito');
-}
-
-    // --- 4. MOSTRAR FORMULARIO DE EDITAR ---
     public function edit($id)
     {
         $comercio = Comercio::findOrFail($id);
-        // Usaremos una vista separada para editar para evitar confusiones
         return view('Proyecto.Comercios.edit', compact('comercio'));
     }
 
-    // --- 5. ACTUALIZAR (Update) ---
     public function update(Request $request, $id)
     {
         $request->validate([
             'nombre' => 'required|max:255',
+            'foto' => 'nullable|image|max:2048'
         ]);
 
         $comercio = Comercio::findOrFail($id);
+
+        if ($request->hasFile('foto')) {
+            if ($comercio->foto) {
+                Storage::disk('public')->delete($comercio->foto);
+            }
+            $comercio->foto = $request->file('foto')->store('fotos_comercios', 'public');
+        }
 
         $comercio->update([
             'nombre' => $request->nombre,
@@ -86,12 +85,20 @@ class ComercioController extends Controller
         return redirect()->route('comercios.index')->with('success', 'Comercio actualizado');
     }
 
-    // --- 6. ELIMINAR (Destroy) ---
+    // 🔒 PROTECCIÓN APLICADA: Solo el MASTER puede eliminar
     public function destroy($id)
     {
-        $comercio = Comercio::findOrFail($id);
-        $comercio->delete();
+        if (!Auth::user() || !Auth::user()->esMaster()) {
+            return redirect()->route('comercios.index')->with('error', 'Solo los administradores Master pueden borrar comercios.');
+        }
 
+        $comercio = Comercio::findOrFail($id);
+        
+        if ($comercio->foto) {
+            Storage::disk('public')->delete($comercio->foto);
+        }
+
+        $comercio->delete();
         return redirect()->route('comercios.index')->with('success', 'Comercio eliminado');
     }
 }
